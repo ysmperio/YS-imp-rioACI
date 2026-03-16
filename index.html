@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YS Açaí Store</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22YS%20A%C3%A7a%C3%AD%20Store%22%2C%22short_name%22%3A%22YS%20A%C3%A7a%C3%AD%22%2C%22start_url%22%3A%22/%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23fafafa%22%2C%22theme_color%22%3A%22%237a00b3%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https://cdn.jsdelivr.net/gh/twitter/twemoji@14/assets/svg/1f347.svg%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image/png%22%7D%5D%7D">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14/assets/svg/1f347.svg">
+  <meta name="theme-color" content="#7a00b3">
+
+  <style>
+    :root{
+      --purple:#7a00b3; --purple-dark:#5a0080; --radius:12px; --shadow:0 4px 16px rgba(0,0,0,.13);
+      --font-main:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+      --transition:.25s cubic-bezier(.36,.7,.42,1.2);
+    }
+    *{box-sizing:border-box; font-family:var(--font-main);}
+    body{margin:0; background:#fafafa; color:#2a2a2a;}
+    @media (prefers-color-scheme:dark){
+      body{background:#111; color:#eee;}
+      .product{background:#1b1b1b;}
+    }
+    header{background:var(--purple); color:#fff; text-align:center; padding:22px 16px;}
+    header h1{font-size:1.8rem; margin:0;}
+    header p{opacity:.9; margin:4px 0 0;}
+    .bannerFree{
+      background:linear-gradient(90deg,#ffb310 0%,#ffcc35 100%);
+      color:#000; text-align:center; font-weight:600; padding:6px; font-size:.9rem;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      animation:pulse 1.5s infinite;
+    }
+    @keyframes pulse{0%{opacity:1;}50%{opacity:.75;}100%{opacity:1;}}
+    .container{padding:16px; max-width:920px; margin:auto;}
+    .product{display:flex; flex-direction:column; background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:16px; transition:var(--transition);}
+    .product:hover{transform:translateY(-3px);}
+    .product img{width:100%; height:190px; object-fit:cover; border-radius:var(--radius) var(--radius) 0 0;}
+    .product-info{padding:14px;}
+    .price{color:var(--purple); font-size:1.25rem; font-weight:700;}
+    select{width:100%; padding:10px; margin-top:6px; border:1px solid #ccc; border-radius:8px; font-size:14px;}
+    .btn{width:100%; padding:12px; margin-top:10px; border:none; border-radius:8px; background:var(--purple); color:#fff; font-size:16px; cursor:pointer; transition:var(--transition);}
+    .btn:hover{filter:brightness(1.12);}
+    .pix, .delivery, .admin{background:#fff; padding:16px; border-radius:var(--radius); margin-top:16px;}
+    .cart{position:fixed; bottom:0; left:0; right:0; background:#fff; padding:14px 16px; box-shadow:var(--shadow); display:flex; align-items:center; justify-content:space-between;}
+    .cart p{margin:0 8px 0 0; flex:1 1 0;}
+    .total{font-weight:700; color:var(--purple);}
+    .floWapp{position:fixed; bottom:80px; right:16px; background:#25D366; color:#fff; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 4px 12px rgba(0,0,0,.25); z-index:99; transition:transform .2s;}
+    .floWapp:hover{transform:scale(1.1);}
+    @media (max-width:480px){
+      .product img{height:150px;}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>YS Açaí Store 🍇</h1>
+    <p>Monte seu açaí favorito</p>
+  </header>
+
+  <div class="bannerFree">
+    🚚 Entrega grátis acima de R$ 40,00 • 🎁 Ganhe 1 brigadeiro GRÁTIS pedindo em até 10 min
+  </div>
+
+  <div class="container">
+    <!-- PRODUTOS -->
+    <div class="product" data-price="10">
+      <img src="https://images.unsplash.com/photo-1625944525533-473f1f9b0b6b">
+      <div class="product-info">
+        <h3>Açaí 300 ml</h3>
+        <p class="price">R$ 10,00</p>
+        <select class="opcional">
+          <option value="">Sem adicional</option>
+          <option value="Granola">Granola</option>
+          <option value="Leite condensado">Leite condensado</option>
+          <option value="Leite em pó">Leite em pó</option>
+          <option value="Paçoca">Paçoca</option>
+          <option value="Morango">Morango</option>
+        </select>
+        <button class="btn" onclick="addCart(this)">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="product" data-price="15">
+      <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e">
+      <div class="product-info">
+        <h3>Açaí 500 ml</h3>
+        <p class="price">R$ 15,00</p>
+        <select class="opcional">
+          <!-- iguais -->
+        </select>
+        <button class="btn" onclick="addCart(this)">Adicionar</button>
+      </div>
+    </div>
+
+    <div class="product" data-price="25">
+      <img src="https://images.unsplash.com/photo-1604908176997-431d3c6f8f5c">
+      <div class="product-info">
+        <h3>Açaí 1 L</h3>
+        <p class="price">R$ 25,00</p>
+        <select class="opcional">
+          <!-- iguais -->
+        </select>
+        <button class="btn" onclick="addCart(this)">Adicionar</button>
+      </div>
+    </div>
+
+    <!-- ENTREGA + MAPA -->
+    <div class="delivery">
+      <h3>Calcular entrega</h3>
+      <select id="bairro">
+        <option value="5">Centro - R$ 5</option>
+        <option value="7">Bairro A - R$ 7</option>
+        <option value="10">Bairro B - R$ 10</option>
+      </select>
+      <!-- MAPA AO VIVO -->
+      &lt;iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.!2d-46.!3d-23.!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMwJzAwLjAiUyA0NsKwMjQnMDAuMCJX" width="100%" height="220" style="border:0; border-radius:var(--radius); margin-top:10px;" allowfullscreen="" loading="lazy"&gt;&lt;/iframe&gt;
+    </div>
+
+    <!-- PIX -->
+    <div class="pix">
+      <h3>Pagamento PIX</h3>
+      <p>Chave PIX:</p>
+      <b>SUA_CHAVE_PIX</b>
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="admin">
+      <h3>Painel de pedidos</h3>
+      <p id="orders">Nenhum pedido ainda</p>
+    </div>
+  </div>
+
+  <!-- BOTÃO FLUTUANTE -->
+  <a class="floWapp" href="https://wa.me/SEU_NUMERO" target="_blank">💬</a>
+
+  <!-- CARRINHO -->
+  <div class="cart">
+    <p id="cart"></p>
+    <p class="total" id="total">Total: R$ 0,00</p>
+    <button class="btn" style="background:#25D366;" onclick="sendOrder()">Finalizar pedido</button>
+  </div>
+
+  <!-- AUDIO SINCO -->
+  <audio id="sndAdd" preload="auto">
+    <source src="data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjQ1LjEwMAAAAAAAAAAAAAAA//tAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAExBTUUzLjEwMAf1gAAAAAAAAAAAAAAJARU2cDXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//tAwRKAAAAAAAe2iEoAAAAAAA*
